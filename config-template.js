@@ -6,7 +6,7 @@ const config = {
     appUser: "...",
     appPassword: "...",
     port: "5000",
-    serverRoot: "http://172.1.1.1:5000"
+    serverRoot: "/"
 };
 
 module.exports = config;
