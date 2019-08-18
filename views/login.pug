@@ -1,0 +1,16 @@
+extends layout
+
+block container
+    div(style="margin:0 auto; width:600px;padding-top:50px;")
+        h1 Login to access the portal
+        hr
+        form(method="POST" action="login")
+            input(name="username" required placeholder="Username").form-control
+            br
+            input(name="password" required type="password" placeholder="Password").form-control
+            br
+            input.btn.btn-info(type="submit" value="Login")
+
+
+
+

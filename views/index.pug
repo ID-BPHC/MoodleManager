@@ -1,0 +1,37 @@
+extends layout
+
+block container
+  h1 Upload Files to Process
+  p Upload the required files in CSV Format and submit to make changes to the database. 
+  p.text-danger Please be careful as this is a WRITE operation.
+
+  div.alert.alert-warning
+    h4 Note
+    ul
+      li TD SQL Server Must be running for this tool to work
+      li Remove header lines from CSV ( Line 1 )
+
+
+  form(action='./upload-data' method='post' enctype='multipart/form-data')
+
+    .form-group
+      span Faculty List CSV
+      input.form-control(type="file" accept=".csv" required name="faculty")
+    .form-group
+      span Research Scholars CSV
+      input.form-control(type="file" accept=".csv" required name="research")
+    .form-group
+      span BITS Time Table With Facility CSV
+      input.form-control(type="file" accept=".csv" required name="timetable")
+
+    input.btn.btn-success(type="submit" value="Upload and Process CMS Updates")
+    hr
+    h2 Example formats of files
+    pre
+      code
+        | faculty.csv
+        | H0001,P N Rao,CIVIL,abcde@hyderabad.bits-pilani.ac.in
+        | research.csv
+        |41220110025,SHANMUKHASUNDARAM V R,CIVIL,P20x10035@hyderabad.bits-pilani.ac.in
+        |timetable.csv 
+        | Course ID	Subject	Catalog	Course Title	Class Nbr	Section	Class Pattern	Mtg Start	End Time	Exam Date	Exam Code	Class_Instructor	Name	Role	Course_admin	Name	Cap Enrl	Tot Enrl	Facil ID	Offer Nbr	Component	Enrl Stat	Assoc	Consent	Event ID	Access	Career	Class Stat	Class Type	Auto Enrol	Auto Enr 2	Start Time	End Time

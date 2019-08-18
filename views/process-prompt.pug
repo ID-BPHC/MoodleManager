@@ -1,0 +1,12 @@
+extends layout
+
+block container
+  h1 Upload Complete
+  hr
+  p Files were probably uploaded. There is no way to know. Would you like to process these files and re-create the enrolments database now?
+  div.alert.alert-warning
+    span Please be patient, this will take some time.
+  hr
+  a.btn.btn-success(href="./process") Process Files
+
+
