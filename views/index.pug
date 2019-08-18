@@ -1,0 +1,27 @@
+extends layout
+
+block container
+  h1 Upload Files to Process
+  p Upload the required files in CSV Format and submit to make changes to the database. 
+  p.text-danger Please be careful as this is a WRITE operation.
+
+  div.alert.alert-warning
+    h4 Note
+    ul
+      li TD SQL Server Must be running for this tool to work
+      li Remove header lines from CSV ( Line 1 )
+
+
+  form(action='./upload-data' method='post' enctype='multipart/form-data')
+
+    .form-group
+      span Faculty List CSV
+      input.form-control(type="file" accept=".csv" required name="faculty")
+    .form-group
+      span Research Scholars CSV
+      input.form-control(type="file" accept=".csv" required name="research")
+    .form-group
+      span BITS Time Table With Facility CSV
+      input.form-control(type="file" accept=".csv" required name="timetable")
+
+    input.btn.btn-success(type="submit" value="Upload and Process CMS Updates")

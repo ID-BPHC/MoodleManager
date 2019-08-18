@@ -1,0 +1,10 @@
+body,html{
+    height:100%;
+}
+.login{
+    width:500px;
+}
+.login-form{
+    width:400px;
+    margin:0 auto;
+}
