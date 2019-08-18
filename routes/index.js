@@ -16,12 +16,9 @@ function checkAuthentication(req, res, next) {
 router.post("/login", (req, res, next) => {
   if (req.body.username == config.appUser && req.body.password == config.appPassword) {
     req.session.username = config.appUser;
-    console.log("Matched");
-    res.redirect("/");
+    res.redirect(config.serverRoot);
   }else{
-    console.log("Not matched");
-    console.log(req.body, config.appPassword, config.appUser);
-    res.redirect("/");
+    res.redirect(config.serverRoot);
   }
 })
 

@@ -18,7 +18,6 @@ function createLog(...strings) {
     for (item of strings) {
         log += item
         log += "\n";
-        console.log(item)
     }
 }
 

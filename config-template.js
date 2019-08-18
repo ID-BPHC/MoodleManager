@@ -5,7 +5,8 @@ const config = {
     sessionSecret: "...",
     appUser: "...",
     appPassword: "...",
-    port: "5000"
+    port: "5000",
+    serverRoot: "http://172.1.1.1:5000"
 };
 
 module.exports = config;
