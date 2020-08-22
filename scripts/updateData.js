@@ -28,14 +28,6 @@ async function importFacultyAndScholars() {
         user: config.mysql_user,
         password: config.mysql_password,
     });
-    await connection.execute(`DROP DATABASE ${uploadsDBName}`).catch((err) => {
-        createLog(err);
-    })
-    await connection.execute(`CREATE DATABASE ${uploadsDBName}`).catch((err) => {
-        createLog(err);
-    })
-    await connection.execute("CREATE TABLE `TEMP_TEACHER_DATA`.`faculty` ( `id` TEXT NOT NULL , `name` TEXT NOT NULL , `dept` TEXT NOT NULL , `email` TEXT NOT NULL , PRIMARY KEY (`id`(5))) ENGINE = InnoDB;");
-    await connection.execute("CREATE TABLE `TEMP_TEACHER_DATA`.`research` ( `id` TEXT NOT NULL , `name` TEXT NOT NULL , `dept` TEXT NOT NULL , `email` TEXT NOT NULL , PRIMARY KEY (`id`(11))) ENGINE = InnoDB;");
     var fileStream = fs.createReadStream('uploads/faculty.csv');
     var rl = readline.createInterface({
         input: fileStream,
@@ -47,7 +39,12 @@ async function importFacultyAndScholars() {
         const column = line.split(",");
         for (var id in column) {
             column[id] = column[id].trim();
-        }
+        } 
+        var instructorType='faculty'; 
+        var [rows, fields] = await connection.execute(`SELECT \`id\` FROM \`${uploadsDBName}\`.\`${instructorType}\` WHERE \`id\` LIKE '${column[0]}' `).catch((err) => {
+            createLog(err);
+        });
+        if(rows.length==0)
         await connection.execute(`INSERT INTO \`${uploadsDBName}\`.\`faculty\` (\`id\`, \`name\`, \`dept\`, \`email\`) VALUES ('${column[0]}', '${column[1]}', 'NULL', '${column[3]}'); `).catch((err) => {
             createLog(err);
         })
@@ -66,6 +63,11 @@ async function importFacultyAndScholars() {
         for (var id in column) {
             column[id] = column[id].trim();
         }
+        var instructorType='research'; 
+        var [rows, fields] = await connection.execute(`SELECT \`id\` FROM \`${uploadsDBName}\`.\`${instructorType}\` WHERE \`id\` LIKE '${column[0]}' `).catch((err) => {
+            createLog(err);
+        }); 
+        if(rows.length==0)
         await connection.execute(`INSERT INTO \`${uploadsDBName}\`.\`research\` (\`id\`, \`name\`, \`dept\`, \`email\`) VALUES ('${column[0]}', '${column[1]}', 'NULL', '${column[3]}'); `).catch((err) => {
             createLog(err);
         })
@@ -74,28 +76,6 @@ async function importFacultyAndScholars() {
     createLog("Research", rcount);
 
     connection.end();
-}
-
-
-async function createEnrolmentsTableAndDB() {
-    const connection = await mysql.createConnection({
-        host: config.mysql_host,
-        user: config.mysql_user,
-        password: config.mysql_password,
-    });
-    createLog("DROP DATABASE enrolments");
-    await connection.execute("DROP DATABASE enrolments").catch((err) => {
-        createLog(err);
-    })
-    createLog("CREATE DATABASE enrolments");
-    await connection.execute("CREATE DATABASE enrolments").catch((err) => {
-        createLog(err);
-    })
-    createLog("Creating table teacher_mapping");
-    await connection.execute(enrolmentsTableQuery).catch((err) => {
-        createLog("Error while creating enrolments DB and table", err);
-    })
-    connection.end()
 }
 
 
@@ -171,8 +151,6 @@ async function processLineByLine() {
 }
 
 async function executeScript() {
-    createLog("Manipulating enrolments db");
-    await createEnrolmentsTableAndDB()
     createLog("Importing Faculty and Scholar PSRN/Emails to TEMP DB.")
     await importFacultyAndScholars();
     createLog("Processing the time table and inserting data to enrolments.teacher_mapping")

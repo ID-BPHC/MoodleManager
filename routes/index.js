@@ -3,6 +3,7 @@ var router = express.Router();
 var uploadData = require("./uploadData");
 var cmsScript = require("../scripts/processData");
 var config = require("../config");
+var updateScript = require("../scripts/updateData");
 
 
 function checkAuthentication(req, res, next) {
@@ -31,6 +32,12 @@ router.get('/', checkAuthentication, function (req, res, next) {
 router.get("/process", checkAuthentication, async (req, res, next) => {
   var log = await cmsScript.executeScript();
   res.render("process-complete", { title: "Processing Complete", log: log });
-})
+});
+
+router.get("/update", checkAuthentication, async (req, res, next) => {
+  // console.log("hi");
+  var log = await updateScript.executeScript();
+  res.render("process-complete", { title: "Processing Complete", log: log });
+});
 
 module.exports = router;
