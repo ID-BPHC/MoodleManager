@@ -8,8 +8,9 @@
 * Ensure that database passwords and usernames are correct in config.js , use ```config-template.js``` to make ```config.js```
 * Ensure TD Database is live.
 * Place the required files in the ```uploads``` folder. Which files are required ? See sample in ```uploads-template``` folder.
-* Uncomment the last line of ```scripts/processData.js```
-* Exectue the file ```scripts/processData.js``` by using ```node uploads/processData```
+* There are 2 options either to update the existing Database or to reset the Database
+* To reset the Database uncomment the last line of ```scripts/processData.js``` and exectue the file ```scripts/processData.js``` by using ```node uploads/processData```
+* To update the Database uncomment the last line of ```scripts/updateData.js``` and exectue the file ```scripts/updateData.js``` by using ```node uploads/updateData```
 
 ### GUI ( Web ) Usage 
 
